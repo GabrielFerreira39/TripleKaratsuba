@@ -58,27 +58,22 @@ public class App {
 
     }
 
-    public String longAddition(String num1, String num2) {
+    public String longAddition(String num1, String num2, String num3) {
         StringBuilder result = new StringBuilder();
 
         int carry = 0;
-        if (num2.length() > num1.length()) {
-            String temp = num1;
-            num1 = num2;
-            num2 = temp;
-        }
+        int maxLength = Math.max(num1.length(), num2.length());
 
-        int maxLength = num1.length();
-
-        // Pad the shorter number with leading zeros to make them equal length
         num1 = padWithZeros(num1, maxLength);
         num2 = padWithZeros(num2, maxLength);
+        num3 = padWithZeros(num3, maxLength);
 
         for (int i = maxLength - 1; i >= 0; i--) {
             int digit1 = Character.getNumericValue(num1.charAt(i));
             int digit2 = Character.getNumericValue(num2.charAt(i));
+            int digit3 = Character.getNumericValue(num3.charAt(i));
 
-            int sum = digit1 + digit2 + carry;
+            int sum = digit1 + digit2 + digit3 + carry;
 
             carry = sum / 10;
             result.insert(0, sum % 10);
@@ -91,7 +86,6 @@ public class App {
         return result.toString();
     }
 
-    // Function to pad a string with leading zeros
     private static String padWithZeros(String str, int length) {
         StringBuilder paddedStr = new StringBuilder(str);
         while (paddedStr.length() < length) {
