@@ -4,8 +4,8 @@ public class App {
     public static void main(String[] args) throws Exception {
         Scanner in = new Scanner(System.in);
 
-        String strNum1 = "6753480572358";
-        String strNum2 = "978349839884938";
+        String strNum1 = "123456";
+        String strNum2 = "123456";
 
         numCorrector(strNum1, strNum2);
 
@@ -56,6 +56,48 @@ public class App {
 
         return a1;
 
+    }
+
+    public String longAddition(String num1, String num2) {
+        StringBuilder result = new StringBuilder();
+
+        int carry = 0;
+        if (num2.length() > num1.length()) {
+            String temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int maxLength = num1.length();
+
+        // Pad the shorter number with leading zeros to make them equal length
+        num1 = padWithZeros(num1, maxLength);
+        num2 = padWithZeros(num2, maxLength);
+
+        for (int i = maxLength - 1; i >= 0; i--) {
+            int digit1 = Character.getNumericValue(num1.charAt(i));
+            int digit2 = Character.getNumericValue(num2.charAt(i));
+
+            int sum = digit1 + digit2 + carry;
+
+            carry = sum / 10;
+            result.insert(0, sum % 10);
+        }
+
+        if (carry > 0) {
+            result.insert(0, carry);
+        }
+
+        return result.toString();
+    }
+
+    // Function to pad a string with leading zeros
+    private static String padWithZeros(String str, int length) {
+        StringBuilder paddedStr = new StringBuilder(str);
+        while (paddedStr.length() < length) {
+            paddedStr.insert(0, '0');
+        }
+        return paddedStr.toString();
     }
 
 }
