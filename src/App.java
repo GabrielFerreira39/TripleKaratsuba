@@ -4,14 +4,14 @@ public class App {
     public static void main(String[] args) throws Exception {
         Scanner in = new Scanner(System.in);
 
-        String strNum1 = "1231212";
-        String strNum2 = "456";
+        String strNum1 = "123";
+        String strNum2 = "321";
 
-        karatsuba(strNum1, strNum2);
+        mult(strNum1, strNum2);
 
     }
 
-    public static String karatsuba(String strNum1, String strNum2) {
+    public static String mult(String strNum1, String strNum2) {
 
         String a1 = "", a2 = "", a3 = "", b1 = "", b2 = "", b3 = "";
 
@@ -39,7 +39,24 @@ public class App {
         b2 = strNum2.substring(divide1, divide2);
         b3 = strNum2.substring(divide2);
 
-        return b3;
+        if (n1 == 1) {
+            int answer = Integer.parseInt(strNum1) * Integer.parseInt(strNum2);
+            return Integer.toString(answer);
+        }
+
+        mult(a1, b1);
+        mult(a1, b2);
+        mult(a1, b3);
+        mult(a2, b1);
+        mult(a2, b2);
+        mult(a2, b3);
+        mult(a3, b1);
+        mult(a3, b2);
+        mult(a3, b3);
+
+        karatsuba(a1, a2, a3, b1, b2, b3);
+
+        return null;
     }
 
     public static String zeroAdder(String str, int n1) {
@@ -52,6 +69,36 @@ public class App {
 
         return zeroAdder(str, n1);
 
+    }
+
+    public static String longAddition(String num1, String num2, String num3) {
+        StringBuilder result = new StringBuilder();
+
+        int carry = 0;
+        int maxLength = Math.max(num1.length(), Math.max(num2.length(),
+                num3.length()));
+
+        for (int i = maxLength - 1; i >= 0; i--) {
+            int digit1 = Character.getNumericValue(num1.charAt(i));
+            int digit2 = Character.getNumericValue(num2.charAt(i));
+            int digit3 = Character.getNumericValue(num3.charAt(i));
+
+            int sum = digit1 + digit2 + digit3 + carry;
+
+            carry = sum / 10;
+            result.insert(0, sum % 10);
+        }
+
+        if (carry > 0) {
+            result.insert(0, carry);
+        }
+
+        return result.toString();
+    }
+
+    public static void karatsuba(String a1, String a2, String a3, String b1, String b2, String b3) {
+        String answer = mult(longAddition(a1, a2, a3), longAddition(b1, b2, b3));
+        System.out.println(answer);
     }
 
 }
