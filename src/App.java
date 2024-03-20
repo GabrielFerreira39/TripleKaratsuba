@@ -2,8 +2,8 @@
 public class App {
     public static void main(String[] args) throws Exception {
 
-        String strNum1 = "482634842290384";
-        String strNum2 = "482934827709583";
+        String strNum1 = "999";
+        String strNum2 = "123";
 
         mult(strNum1, strNum2);
 
@@ -94,22 +94,10 @@ public class App {
         return result.toString();
     }
 
-    public static String shifter1(String str) {
-        str = str + "0000";
-        return str;
-
-    }
-
-    public static String shifter2(String str) {
-        str = str + "00";
-        return str;
-
-    }
-
-    public static void karatsuba(String a1, String a2, String a3, String b1,
-            String b2, String b3) {
+    public static String karatsuba(String a1, String a2, String a3, String b1, String b2, String b3) {
         String answer = mult(longAddition(a1, a2, a3), longAddition(b1, b2, b3));
         System.out.println(answer);
+        return answer;
     }
 
 }
