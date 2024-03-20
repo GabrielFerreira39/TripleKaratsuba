@@ -78,9 +78,12 @@ public class App {
         int maxLength = Math.max(num1.length(), Math.max(num2.length(),
                 num3.length()));
 
+        num1 = num1 + "0000";
+        num2 = num2 + "00";
+
         for (int i = maxLength - 1; i >= 0; i--) {
-            int digit1 = Character.getNumericValue(num1.charAt(i));
-            int digit2 = Character.getNumericValue(num2.charAt(i));
+            int digit1 = Integer.parseInt(num1.substring(i, i + 5));
+            int digit2 = Integer.parseInt(num2.substring(i, i + 3));
             int digit3 = Character.getNumericValue(num3.charAt(i));
 
             int sum = digit1 + digit2 + digit3 + carry;
