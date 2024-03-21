@@ -2,14 +2,21 @@ public class App {
 
     public static void main(String[] args) throws Exception {
 
-        String strNum1 = "123456789";
-        String strNum2 = "123456789";
+        String strNum1 = "123456";
+        String strNum2 = "456789";
+        int greaterNum = 0;
 
-        System.out.println(mult(strNum1, strNum2));
+        if (strNum1.length() > strNum2.length()) {
+            greaterNum = strNum1.length();
+        } else {
+            greaterNum = strNum2.length();
+        }
+
+        System.out.println(mult(strNum1, strNum2, greaterNum));
 
     }
 
-    public static String mult(String strNum1, String strNum2) {
+    public static String mult(String strNum1, String strNum2, int greaterNum) {
 
         String a1 = "", a2 = "", a3 = "", b1 = "", b2 = "", b3 = "";
 
@@ -21,6 +28,11 @@ public class App {
 
         int n1 = strNum1.length();
         int n2 = strNum2.length();
+
+        if (n1 == 1 && n2 == 1) {
+            int answer = Integer.parseInt(strNum1) * Integer.parseInt(strNum2);
+            return Integer.toString(answer);
+        }
 
         if (n1 != n2) {
             strNum2 = zeroAdder(strNum2, n1);
@@ -37,20 +49,15 @@ public class App {
         b2 = strNum2.substring(divide1, divide2);
         b3 = strNum2.substring(divide2);
 
-        if (n1 == 1 && n2 == 1) {
-            int answer = Integer.parseInt(strNum1) * Integer.parseInt(strNum2);
-            return Integer.toString(answer);
-        }
-
-        String a1b1 = potency(strNum1.length(), mult(a1, b1));
-        String a1b2 = potency(3, mult(a1, b2));
-        String a1b3 = potency(2, mult(a1, b3));
-        String a2b1 = potency(3, mult(a2, b1));
-        String a2b2 = potency(2, mult(a2, b2));
-        String a2b3 = potency(1, mult(a2, b3));
-        String a3b1 = potency(2, mult(a3, b1));
-        String a3b2 = potency(1, mult(a3, b2));
-        String a3b3 = potency(0, mult(a3, b3));
+        String a1b1 = potency(greaterNum + 1, mult(a1, b1, greaterNum)); // 4
+        String a1b2 = potency(greaterNum, mult(a1, b2, greaterNum)); // 3
+        String a1b3 = potency(greaterNum - 1, mult(a1, b3, greaterNum)); // 2
+        String a2b1 = potency(greaterNum, mult(a2, b1, greaterNum)); // 3
+        String a2b2 = potency(greaterNum - 1, mult(a2, b2, greaterNum)); // 2
+        String a2b3 = potency(greaterNum - 2, mult(a2, b3, greaterNum)); // 1
+        String a3b1 = potency(greaterNum - 1, mult(a3, b1, greaterNum)); // 2
+        String a3b2 = potency(greaterNum - 2, mult(a3, b2, greaterNum)); // 1
+        String a3b3 = potency(greaterNum - greaterNum, mult(a3, b3, greaterNum)); // 0
 
         String result = longAddition(a1b1, a1b2);
         result = longAddition(result, a1b3);

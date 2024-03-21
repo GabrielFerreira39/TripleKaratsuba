@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Katsuba",
+            "request": "launch",
+            "mainClass": "Katsuba",
+            "projectName": "karatsuba3_956439b4"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "karatsuba3_956439b4"
+        },
+        {
+            "type": "java",
             "name": "App",
             "request": "launch",
             "mainClass": "App",
