@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -5,7 +6,7 @@ public class App {
         String strNum1 = "999";
         String strNum2 = "123";
 
-        mult(strNum1, strNum2);
+        System.out.println(mult(strNum1, strNum2));
 
     }
 
@@ -37,24 +38,23 @@ public class App {
         b2 = strNum2.substring(divide1, divide2);
         b3 = strNum2.substring(divide2);
 
-        if (n1 == 1) {
+        if (n1 == 1 && n2 == 1) {
             int answer = Integer.parseInt(strNum1) * Integer.parseInt(strNum2);
             return Integer.toString(answer);
         }
 
-        mult(a1, b1);
-        mult(a1, b2);
-        mult(a1, b3);
-        mult(a2, b1);
-        mult(a2, b2);
-        mult(a2, b3);
-        mult(a3, b1);
-        mult(a3, b2);
-        mult(a3, b3);
+        String k1 = mult(a1, b1);
+        String k2 = mult(a1, b2);
+        String k3 = mult(a1, b3);
+        String k4 = mult(a2, b1);
+        String k5 = mult(a2, b2);
+        String k6 = mult(a2, b3);
+        String k7 = mult(a3, b1);
+        String k8 = mult(a3, b2);
+        String k9 = mult(a3, b3);
 
-        karatsuba(a1, a2, a3, b1, b2, b3);
+        return "0";
 
-        return null;
     }
 
     public static String zeroAdder(String str, int n1) {
@@ -69,19 +69,24 @@ public class App {
 
     }
 
-    public static String longAddition(String num1, String num2, String num3) {
+    public static String potency(int n, String str) {
+        for (int i = 0; i < n; i++) {
+            str += "0";
+        }
+        return str;
+    }
+
+    public static String longAddition(String num1, String num2) {
         StringBuilder result = new StringBuilder();
 
         int carry = 0;
-        int maxLength = Math.max(num1.length(), Math.max(num2.length(),
-                num3.length()));
+        int maxLength = Math.max(num1.length(), num2.length());
 
-        for (int i = maxLength - 1; i >= 0; i--) {
-            int digit1 = Character.getNumericValue(num1.charAt(i));
-            int digit2 = Character.getNumericValue(num2.charAt(i));
-            int digit3 = Character.getNumericValue(num3.charAt(i));
+        for (int i = 0; i < maxLength; i++) {
+            int digit1 = i < num1.length() ? Character.getNumericValue(num1.charAt(num1.length() - 1 - i)) : 0;
+            int digit2 = i < num2.length() ? Character.getNumericValue(num2.charAt(num2.length() - 1 - i)) : 0;
 
-            int sum = digit1 + digit2 + digit3 + carry;
+            int sum = digit1 + digit2 + carry;
 
             carry = sum / 10;
             result.insert(0, sum % 10);
@@ -92,12 +97,6 @@ public class App {
         }
 
         return result.toString();
-    }
-
-    public static String karatsuba(String a1, String a2, String a3, String b1, String b2, String b3) {
-        String answer = mult(longAddition(a1, a2, a3), longAddition(b1, b2, b3));
-        System.out.println(answer);
-        return answer;
     }
 
 }
