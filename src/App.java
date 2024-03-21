@@ -53,7 +53,16 @@ public class App {
         String k8 = mult(a3, b2);
         String k9 = mult(a3, b3);
 
-        return "0";
+        String result = longAddition(k1, k2);
+        result = longAddition(result, k3);
+        result = longAddition(result, k4);
+        result = longAddition(result, k5);
+        result = longAddition(result, k6);
+        result = longAddition(result, k7);
+        result = longAddition(result, k8);
+        result = longAddition(result, k9);
+
+        return result;
 
     }
 
