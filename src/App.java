@@ -1,10 +1,9 @@
-import java.util.Arrays;
-
 public class App {
+
     public static void main(String[] args) throws Exception {
 
-        String strNum1 = "999";
-        String strNum2 = "123";
+        String strNum1 = "123456789";
+        String strNum2 = "123456789";
 
         System.out.println(mult(strNum1, strNum2));
 
@@ -43,24 +42,24 @@ public class App {
             return Integer.toString(answer);
         }
 
-        String k1 = mult(a1, b1);
-        String k2 = mult(a1, b2);
-        String k3 = mult(a1, b3);
-        String k4 = mult(a2, b1);
-        String k5 = mult(a2, b2);
-        String k6 = mult(a2, b3);
-        String k7 = mult(a3, b1);
-        String k8 = mult(a3, b2);
-        String k9 = mult(a3, b3);
+        String a1b1 = potency(strNum1.length(), mult(a1, b1));
+        String a1b2 = potency(3, mult(a1, b2));
+        String a1b3 = potency(2, mult(a1, b3));
+        String a2b1 = potency(3, mult(a2, b1));
+        String a2b2 = potency(2, mult(a2, b2));
+        String a2b3 = potency(1, mult(a2, b3));
+        String a3b1 = potency(2, mult(a3, b1));
+        String a3b2 = potency(1, mult(a3, b2));
+        String a3b3 = potency(0, mult(a3, b3));
 
-        String result = longAddition(k1, k2);
-        result = longAddition(result, k3);
-        result = longAddition(result, k4);
-        result = longAddition(result, k5);
-        result = longAddition(result, k6);
-        result = longAddition(result, k7);
-        result = longAddition(result, k8);
-        result = longAddition(result, k9);
+        String result = longAddition(a1b1, a1b2);
+        result = longAddition(result, a1b3);
+        result = longAddition(result, a2b1);
+        result = longAddition(result, a2b2);
+        result = longAddition(result, a2b3);
+        result = longAddition(result, a3b1);
+        result = longAddition(result, a3b2);
+        result = longAddition(result, a3b3);
 
         return result;
 
@@ -80,7 +79,7 @@ public class App {
 
     public static String potency(int n, String str) {
         for (int i = 0; i < n; i++) {
-            str += "0";
+            str = str + "0";
         }
         return str;
     }
