@@ -1,13 +1,20 @@
-import java.util.Arrays;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class App {
 
     public static void main(String[] args) throws Exception {
 
-        String strNum1 = "123";
-        String strNum2 = "456";
+        while (true) {
 
-        System.out.println(mult(strNum1, strNum2));
+            Scanner sc = new Scanner(System.in);
+
+            String strNum1 = sc.nextLine();
+            String strNum2 = sc.nextLine();
+
+            System.out.println("R: " + zeroRemover(mult(strNum1, strNum2)));
+        }
 
     }
 
@@ -25,7 +32,7 @@ public class App {
         int n2 = strNum2.length();
 
         if (n1 == 1 && n2 == 1) {
-            int answer = strNum1.length() * Integer.parseInt(strNum2);
+            int answer = Integer.parseInt(strNum1) * Integer.parseInt(strNum2);
             return Integer.toString(answer);
         }
 
@@ -36,13 +43,23 @@ public class App {
         int divide1 = n1 / 3;
         int divide2 = divide1 * 2;
 
-        a1 = strNum1.substring(0, divide1);
-        a2 = strNum1.substring(divide1, divide2);
-        a3 = strNum1.substring(divide2);
+        if (n1 == 2) {
+            a1 = "0";
+            a2 = strNum1.substring(0, 1);
+            a3 = strNum1.substring(1);
+            b1 = "0";
+            b2 = strNum2.substring(0, 1);
+            b3 = strNum2.substring(1);
 
-        b1 = strNum2.substring(0, divide1);
-        b2 = strNum2.substring(divide1, divide2);
-        b3 = strNum2.substring(divide2);
+        } else {
+
+            a1 = strNum1.substring(0, divide1);
+            a2 = strNum1.substring(divide1, divide2);
+            a3 = strNum1.substring(divide2);
+            b1 = strNum2.substring(0, divide1);
+            b2 = strNum2.substring(divide1, divide2);
+            b3 = strNum2.substring(divide2);
+        }
 
         String a1b1 = mult(a1, b1); // 4
         String a1b2 = mult(a1, b2); // 3
@@ -54,20 +71,34 @@ public class App {
         String a3b2 = mult(a3, b2); // 1
         String a3b3 = mult(a3, b3); // 0
 
-        String e1 = potency(a2.length() + a3.length());
-        String e2 = potency(a3.length());
+        String shift2 = potency(a2.length() + a3.length());
+        String shift1 = potency(a3.length());
 
-        return removerZeros(
+        String ShiftedA1b1 = a1b1 + shift2 + shift2;
+        String ShiftedA1b2 = a1b2 + shift2 + shift1;
+        String ShiftedA1b3 = a1b3 + shift2;
+        String ShiftedA2b1 = a2b1 + shift2 + shift1;
+        String ShiftedA2b2 = a2b2 + shift1 + shift1;
+        String ShiftedA2b3 = a2b3 + shift1;
+        String ShiftedA3b1 = a3b1 + shift2;
+        String ShiftedA3b2 = a3b2 + shift1;
+
+        return longAddition(
                 longAddition(
                         longAddition(
-                                longAddition(longAddition(
-                                        longAddition(longAddition(
-                                                longAddition(longAddition(a1b1.concat(e1).concat(e1),
-                                                        a1b2.concat(e1).concat(e2)), a1b3.concat(e1)),
-                                                a2b1.concat(e1).concat(e2)), a2b2.concat(e2).concat(e2)),
-                                        a2b3.concat(e2)), a3b1.concat(e1)),
-                                a3b2.concat(e2)),
-                        a3b3));
+                                longAddition(
+                                        longAddition(
+                                                longAddition(
+                                                        longAddition(
+                                                                longAddition(
+                                                                        ShiftedA1b1, ShiftedA1b2),
+                                                                ShiftedA1b3),
+                                                        ShiftedA2b1),
+                                                ShiftedA2b2),
+                                        ShiftedA2b3),
+                                ShiftedA3b1),
+                        ShiftedA3b2),
+                a3b3);
 
     }
 
@@ -83,14 +114,18 @@ public class App {
 
     }
 
-    public static String potency(int n) {
-        char[] shift = new char[n];
-        Arrays.fill(shift, '0');
-        return new String(shift);
+    public static String zeroRemover(String string) {
+        Pattern pattern = Pattern.compile("^0+");
+        Matcher matcher = pattern.matcher(string);
+        return matcher.replaceFirst("");
     }
 
-    private static String removerZeros(String a) {
-        return a.replaceAll("^0+", "");
+    public static String potency(int n) {
+        String zeroes = "";
+        for (int i = 0; i < n; i++) {
+            zeroes = zeroes + "0";
+        }
+        return zeroes;
     }
 
     public static String longAddition(String num1, String num2) {
