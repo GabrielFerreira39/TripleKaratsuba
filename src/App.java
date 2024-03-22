@@ -1,22 +1,17 @@
+import java.util.Arrays;
+
 public class App {
 
     public static void main(String[] args) throws Exception {
 
-        String strNum1 = "123456";
-        String strNum2 = "456789";
-        int greaterNum = 0;
+        String strNum1 = "123";
+        String strNum2 = "456";
 
-        if (strNum1.length() > strNum2.length()) {
-            greaterNum = strNum1.length();
-        } else {
-            greaterNum = strNum2.length();
-        }
-
-        System.out.println(mult(strNum1, strNum2, greaterNum));
+        System.out.println(mult(strNum1, strNum2));
 
     }
 
-    public static String mult(String strNum1, String strNum2, int greaterNum) {
+    public static String mult(String strNum1, String strNum2) {
 
         String a1 = "", a2 = "", a3 = "", b1 = "", b2 = "", b3 = "";
 
@@ -30,7 +25,7 @@ public class App {
         int n2 = strNum2.length();
 
         if (n1 == 1 && n2 == 1) {
-            int answer = Integer.parseInt(strNum1) * Integer.parseInt(strNum2);
+            int answer = strNum1.length() * Integer.parseInt(strNum2);
             return Integer.toString(answer);
         }
 
@@ -49,26 +44,30 @@ public class App {
         b2 = strNum2.substring(divide1, divide2);
         b3 = strNum2.substring(divide2);
 
-        String a1b1 = potency(greaterNum + 1, mult(a1, b1, greaterNum)); // 4
-        String a1b2 = potency(greaterNum, mult(a1, b2, greaterNum)); // 3
-        String a1b3 = potency(greaterNum - 1, mult(a1, b3, greaterNum)); // 2
-        String a2b1 = potency(greaterNum, mult(a2, b1, greaterNum)); // 3
-        String a2b2 = potency(greaterNum - 1, mult(a2, b2, greaterNum)); // 2
-        String a2b3 = potency(greaterNum - 2, mult(a2, b3, greaterNum)); // 1
-        String a3b1 = potency(greaterNum - 1, mult(a3, b1, greaterNum)); // 2
-        String a3b2 = potency(greaterNum - 2, mult(a3, b2, greaterNum)); // 1
-        String a3b3 = potency(greaterNum - greaterNum, mult(a3, b3, greaterNum)); // 0
+        String a1b1 = mult(a1, b1); // 4
+        String a1b2 = mult(a1, b2); // 3
+        String a1b3 = mult(a1, b3); // 2
+        String a2b1 = mult(a2, b1); // 3
+        String a2b2 = mult(a2, b2); // 2
+        String a2b3 = mult(a2, b3); // 1
+        String a3b1 = mult(a3, b1); // 2
+        String a3b2 = mult(a3, b2); // 1
+        String a3b3 = mult(a3, b3); // 0
 
-        String result = longAddition(a1b1, a1b2);
-        result = longAddition(result, a1b3);
-        result = longAddition(result, a2b1);
-        result = longAddition(result, a2b2);
-        result = longAddition(result, a2b3);
-        result = longAddition(result, a3b1);
-        result = longAddition(result, a3b2);
-        result = longAddition(result, a3b3);
+        String e1 = potency(a2.length() + a3.length());
+        String e2 = potency(a3.length());
 
-        return result;
+        return removerZeros(
+                longAddition(
+                        longAddition(
+                                longAddition(longAddition(
+                                        longAddition(longAddition(
+                                                longAddition(longAddition(a1b1.concat(e1).concat(e1),
+                                                        a1b2.concat(e1).concat(e2)), a1b3.concat(e1)),
+                                                a2b1.concat(e1).concat(e2)), a2b2.concat(e2).concat(e2)),
+                                        a2b3.concat(e2)), a3b1.concat(e1)),
+                                a3b2.concat(e2)),
+                        a3b3));
 
     }
 
@@ -84,11 +83,14 @@ public class App {
 
     }
 
-    public static String potency(int n, String str) {
-        for (int i = 0; i < n; i++) {
-            str = str + "0";
-        }
-        return str;
+    public static String potency(int n) {
+        char[] shift = new char[n];
+        Arrays.fill(shift, '0');
+        return new String(shift);
+    }
+
+    private static String removerZeros(String a) {
+        return a.replaceAll("^0+", "");
     }
 
     public static String longAddition(String num1, String num2) {

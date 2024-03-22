@@ -9,6 +9,13 @@
             "name": "Katsuba",
             "request": "launch",
             "mainClass": "Katsuba",
+            "projectName": "karatsuba3_fd950688"
+        },
+        {
+            "type": "java",
+            "name": "Katsuba",
+            "request": "launch",
+            "mainClass": "Katsuba",
             "projectName": "karatsuba3_956439b4"
         },
         {
